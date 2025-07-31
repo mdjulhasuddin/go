@@ -4,29 +4,5 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.addEventListener(evt, e => e.preventDefault());
   });
 });
-function isBloggerHomepage() {
-  const path = window.location.pathname;
-  return path === "/" || path === "/index.html";
-}
-function truncateTextByDevice() {
-  if (isBloggerHomepage()) return;
-  const titles = document.querySelectorAll(".item-title a");
-  const isMobile = window.innerWidth < 768;
-  const maxLength = isMobile ? 39 : 49;
-  titles.forEach(title => {
-    const fullText = title.getAttribute("data-fulltext") || title.textContent.trim();
-    title.textContent = fullText.length > maxLength ? fullText.substring(0, maxLength).trim() + "...?" : fullText;
-    title.setAttribute("data-fulltext", fullText);
-  });
-}
-window.addEventListener("load", truncateTextByDevice);
-window.addEventListener("resize", truncateTextByDevice);
-document.addEventListener("DOMContentLoaded", () => {
-  document.querySelectorAll(".item-post").forEach(post => {
-    post.addEventListener("click", e => {
-      if (e.target.closest("a") || e.target.tagName === "A" || e.target.closest("button")) return;
-      const link = post.querySelector("a[href]");
-      if (link) window.location.href = link.href;
-    });
-  });
-});
+function isBloggerHomepage(){const e=window.location.pathname;return("/"===e||"/index.html"===e)&&!e.startsWith("/search")}function truncateTextByDevice(){if(!isBloggerHomepage())return;const e=document.querySelectorAll(".item-title a"),t=window.innerWidth<768,n=t?39:49;e.forEach(e=>{const t=e.getAttribute("data-fulltext")||e.textContent.trim();e.hasAttribute("data-fulltext")||e.setAttribute("data-fulltext",t);const r=t.length>n?t.substring(0,n).trim()+"...":t;e.textContent=r})}document.addEventListener("DOMContentLoaded",truncateTextByDevice),window.addEventListener("resize",truncateTextByDevice);
+window.addEventListener("load",truncateTextByDevice),window.addEventListener("resize",truncateTextByDevice),document.addEventListener("DOMContentLoaded",()=>{document.querySelectorAll(".item-post").forEach(e=>{e.addEventListener("click",t=>{if(t.target.closest("a")||"A"===t.target.tagName||t.target.closest("button"))return;const r=e.querySelector("a[href]");r&&(window.location.href=r.href)})})});
